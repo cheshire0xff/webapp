@@ -1,0 +1,49 @@
+@page
+@model WebApp.Pages.JobOffers.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>JobOffer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.employerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.employerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.contentLocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.contentLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.localization)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.localization)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.tags)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.tags)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.expirationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.expirationDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.JobOffer.id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

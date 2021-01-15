@@ -1,0 +1,52 @@
+@page
+@model WebApp.Pages.JobOffers.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>JobOffer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.employerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.employerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.contentLocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.contentLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.localization)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.localization)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.tags)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.tags)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobOffer.expirationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobOffer.expirationDate)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="JobOffer.id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
