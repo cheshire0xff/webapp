@@ -9,8 +9,8 @@ using WebApp.Data;
 namespace WebApp.Data.DataMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210124095038_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20210127210506_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,13 +47,13 @@ namespace WebApp.Data.DataMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<short>("accepted")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("fileId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("jobOfferId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("status")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("userId")

@@ -12,22 +12,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobApplication.jobOfferId)
+            CV
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobApplication.jobOfferId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobApplication.userId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobApplication.userId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobApplication.fileId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobApplication.fileId)
+            <a asp-page-handler="Download" asp-route-id="@Model.JobApplication.fileId">Download</a> |
         </dd>
     </dl>
 </div>

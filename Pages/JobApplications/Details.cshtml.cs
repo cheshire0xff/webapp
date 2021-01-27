@@ -36,5 +36,15 @@ namespace WebApp.Pages.JobApplications
             }
             return Page();
         }
+
+        public async Task<ActionResult> OnGetDownloadAsync(int id)
+        {
+            var file = await _context.DatabaseFile.FindAsync(id);
+            if (file != null)
+            {
+                return File(file.Content, "application/pdf", "cv.pdf");
+            }
+            return RedirectToPage("./Index");
+        }
     }
 }

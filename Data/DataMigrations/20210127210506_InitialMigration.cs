@@ -30,7 +30,8 @@ namespace WebApp.Data.DataMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     jobOfferId = table.Column<int>(nullable: false),
                     userId = table.Column<string>(nullable: false),
-                    fileId = table.Column<int>(nullable: false)
+                    fileId = table.Column<int>(nullable: false),
+                    status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

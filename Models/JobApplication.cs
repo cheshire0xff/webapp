@@ -13,8 +13,14 @@ namespace WebApp.Models
         public string userId { get; set;}
         [Required]
         public int fileId { get; set;}
+        public enum Status
+        {
+            Pending,
+            Rejected,
+            Accepted
+        }
         [Required]
-        public short accepted { get; set;}
+        public Status status{ get; set;}
     }
     
 }

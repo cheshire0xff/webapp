@@ -14,20 +14,36 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="JobApplication.id" />
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="form-group">
+                    <label asp-for="JobApplication.jobOfferId" class="control-label"></label>
+                    <input asp-for="JobApplication.jobOfferId" class="form-control" />
+                    <span asp-validation-for="JobApplication.jobOfferId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="JobApplication.userId" class="control-label"></label>
+                    <input asp-for="JobApplication.userId" class="form-control" />
+                    <span asp-validation-for="JobApplication.userId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="JobApplication.fileId" class="control-label"></label>
+                    <input asp-for="JobApplication.fileId" class="form-control" />
+                    <span asp-validation-for="JobApplication.fileId" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" asp-for="JobApplication.jobOfferId" />
+                <input type="hidden" asp-for="JobApplication.userId" />
+                <input type="hidden" asp-for="JobApplication.fileId" />
+            }
             <div class="form-group">
-                <label asp-for="JobApplication.jobOfferId" class="control-label"></label>
-                <input asp-for="JobApplication.jobOfferId" class="form-control" />
-                <span asp-validation-for="JobApplication.jobOfferId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="JobApplication.userId" class="control-label"></label>
-                <input asp-for="JobApplication.userId" class="form-control" />
-                <span asp-validation-for="JobApplication.userId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="JobApplication.fileId" class="control-label"></label>
-                <input asp-for="JobApplication.fileId" class="form-control" />
-                <span asp-validation-for="JobApplication.fileId" class="text-danger"></span>
+                <label asp-for="JobApplication.status" class="control-label"></label>
+                <select asp-for="JobApplication.status" asp-items="Html.GetEnumSelectList<WebApp.Models.JobApplication.Status>()" class="form-control">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="JobApplication.status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -45,13 +45,13 @@ namespace WebApp.Data.DataMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<short>("accepted")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("fileId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("jobOfferId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("status")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("userId")

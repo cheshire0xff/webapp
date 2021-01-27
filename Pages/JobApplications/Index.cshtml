@@ -14,7 +14,7 @@
                 @Html.DisplayNameFor(model => model.JobApplicationJobOffer[0].JobOffer.description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobApplicationJobOffer[0].JobApplication.accepted)
+                @Html.DisplayNameFor(model => model.JobApplicationJobOffer[0].JobApplication.status)
             </th>
             <th></th>
         </tr>
@@ -26,10 +26,7 @@
                 @Html.DisplayFor(modelItem => item.JobOffer.description)
             </td>
             <td>
-                @{
-                    var boolFormat = item.JobApplication.accepted == 1 ? true : false;
-                    @Html.DisplayFor(modelItem => boolFormat)
-                }
+                @Html.DisplayFor(modelItem => item.JobApplication.status)
             </td>
             <td>
                 @if (User.IsInRole("Administrator"))
@@ -38,7 +35,8 @@
                 }
                 else if (User.IsInRole("Employer"))
                 {
-                    <a asp-page="/JobOffers/Details" asp-route-id="@item.JobOffer.id">Details</a>
+                    <a asp-page="./Details" asp-route-id="@item.JobOffer.id">Details</a>
+                    <a asp-page="./Edit" asp-route-id="@item.JobApplication.id">Edit</a>
                 }
                 else
                 {
