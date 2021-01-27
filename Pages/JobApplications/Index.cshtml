@@ -26,11 +26,26 @@
                 @Html.DisplayFor(modelItem => item.JobOffer.description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JobApplication.accepted)
+                @{
+                    var boolFormat = item.JobApplication.accepted == 1 ? true : false;
+                    @Html.DisplayFor(modelItem => boolFormat)
+                }
             </td>
             <td>
-                <a asp-page="/JobOffers/Details" asp-route-id="@item.JobApplication.id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.JobApplication.id">Delete</a>
+                @if (User.IsInRole("Administrator"))
+                {
+
+                }
+                else if (User.IsInRole("Employer"))
+                {
+                    <a asp-page="/JobOffers/Details" asp-route-id="@item.JobOffer.id">Details</a>
+                }
+                else
+                {
+                    <a asp-page="/JobOffers/Details" asp-route-id="@item.JobOffer.id">Details</a>
+                    <text> |</text>
+                    <a asp-page="./Delete" asp-route-id="@item.JobApplication.id">Delete</a>
+                }
             </td>
         </tr>
 }

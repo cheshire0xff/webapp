@@ -47,13 +47,13 @@
                 @Html.DisplayFor(modelItem => item.expirationDate)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
                 <a asp-page-handler="Download" asp-route-id="@item.fileId">Download</a> |
                 @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
                 {
+                    <a asp-page="./Edit" asp-route-id="@item.id">Edit</a><text> |</text>
                     <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
                 }
-                else
+                else if(User.Identity.IsAuthenticated)
                 {
                     <a asp-page="/JobApplications/Create" asp-route-id="@item.id">Apply</a>
                 }

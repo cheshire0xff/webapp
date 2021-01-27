@@ -56,10 +56,19 @@ namespace WebApp.Pages.JobApplications
             {
                 return Page();
             }
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var alreadyApplied = _context.JobApplication
+                .Where(ja => ja.userId == user.Id)
+                .Where(ja => ja.jobOfferId == JobApplication.jobOfferId)
+                .Count() > 0;
 
+            if (alreadyApplied)
+            {
+                ModelState.AddModelError("Error", "Aready applied.");
+                return Page();
+            }
             _context.JobApplication.Add(JobApplication);
             await _context.SaveChangesAsync();
-
             return RedirectToPage("./Index");
         }
     }
