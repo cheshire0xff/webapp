@@ -1,0 +1,39 @@
+@page
+@model WebApp.Pages.CV.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (Model.cvFile == null)
+{
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+}
+@if (Model.cvFile != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    CV
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Your CV
+                </td>
+                <td>
+                    <a asp-page-handler="Download">Download</a> |
+                    <a asp-page-handler="Delete">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

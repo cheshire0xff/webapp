@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CoreApp.Data;
-using CoreApp.Models;
+using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Pages.JobOffers
 {
     public class DetailsModel : PageModel
     {
-        private readonly CoreApp.Data.JobOfferContext _context;
+        private readonly WebApp.Data.DataContext _context;
 
-        public DetailsModel(CoreApp.Data.JobOfferContext context)
+        public DetailsModel(WebApp.Data.DataContext context)
         {
             _context = context;
         }
@@ -35,6 +35,16 @@ namespace WebApp.Pages.JobOffers
                 return NotFound();
             }
             return Page();
+        }
+
+        public async Task<ActionResult> OnGetDownloadAsync(int id)
+        {
+            var file = await _context.DatabaseFile.FindAsync(id);
+            if (file != null)
+            {
+                return File(file.Content, "application/pdf", "offer.pdf");
+            }
+            return RedirectToPage("./Index");
         }
     }
 }

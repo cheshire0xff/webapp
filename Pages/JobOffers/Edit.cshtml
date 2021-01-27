@@ -14,15 +14,12 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="JobOffer.id" />
+            <input type="hidden" asp-for="JobOffer.employerId" />
+            <input type="hidden" asp-for="JobOffer.fileId" />
             <div class="form-group">
-                <label asp-for="JobOffer.employerId" class="control-label"></label>
-                <input asp-for="JobOffer.employerId" class="form-control" />
-                <span asp-validation-for="JobOffer.employerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="JobOffer.contentLocation" class="control-label"></label>
-                <input asp-for="JobOffer.contentLocation" class="form-control" />
-                <span asp-validation-for="JobOffer.contentLocation" class="text-danger"></span>
+                <label asp-for="JobOffer.description" class="control-label"></label>
+                <input asp-for="JobOffer.description" class="form-control" />
+                <span asp-validation-for="JobOffer.description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="JobOffer.localization" class="control-label"></label>

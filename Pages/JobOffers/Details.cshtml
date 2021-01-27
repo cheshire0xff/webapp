@@ -12,16 +12,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobOffer.employerId)
+            @Html.DisplayNameFor(model => model.JobOffer.description)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobOffer.employerId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobOffer.contentLocation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobOffer.contentLocation)
+            @Html.DisplayFor(model => model.JobOffer.description)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.JobOffer.localization)
@@ -41,6 +35,13 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.JobOffer.expirationDate)
         </dd>
+        <dt class="col-sm-2">
+            Documentation
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-page-handler="Download" asp-route-id="@Model.JobOffer.fileId">Download</a> |
+        </dd>
+
     </dl>
 </div>
 <div>

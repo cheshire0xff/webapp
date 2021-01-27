@@ -12,7 +12,6 @@ using WebApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CoreApp.Data;
 
 namespace WebApp
 {
@@ -34,13 +33,11 @@ namespace WebApp
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages(options => {
-            options.Conventions.AuthorizeFolder("/JobOffers");
-            });
+            services.AddRazorPages();
             services.AddAuthorization();
 
-            services.AddDbContext<JobOfferContext>(options =>
-                    options.UseSqlite(Configuration.GetConnectionString("JobOfferContext")));
+            services.AddDbContext<DataContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("DataContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

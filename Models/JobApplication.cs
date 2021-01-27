@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreApp.Models
+namespace WebApp.Models
 {
     public class JobApplication
     {
@@ -10,9 +10,11 @@ namespace CoreApp.Models
         [Required]
         public int jobOfferId { get; set;}
         [Required]
-        public int userId { get; set;}
+        public string userId { get; set;}
         [Required]
-        public string cvLocation { get; set;}
+        public int fileId { get; set;}
+        [Required]
+        public short accepted { get; set;}
     }
     
 }

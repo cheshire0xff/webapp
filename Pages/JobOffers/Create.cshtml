@@ -11,17 +11,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="JobOffer.employerId" class="control-label"></label>
-                <input asp-for="JobOffer.employerId" class="form-control" />
-                <span asp-validation-for="JobOffer.employerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="JobOffer.contentLocation" class="control-label"></label>
-                <input asp-for="JobOffer.contentLocation" class="form-control" />
-                <span asp-validation-for="JobOffer.contentLocation" class="text-danger"></span>
+                <label asp-for="JobOffer.description" class="control-label"></label>
+                <input asp-for="JobOffer.description" class="form-control" />
+                <span asp-validation-for="JobOffer.description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="JobOffer.localization" class="control-label"></label>
@@ -40,6 +35,17 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessage("File", new{@class="text-danger"})
+                <dl>
+                    <dt>
+                        <label asp-for="FileUpload.FormFile"></label>
+                    </dt>
+                    <dd>
+                        <input asp-for="FileUpload.FormFile" type="file">
+                    </dd>
+                </dl>
             </div>
         </form>
     </div>

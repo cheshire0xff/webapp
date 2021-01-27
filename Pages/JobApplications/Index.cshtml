@@ -1,0 +1,38 @@
+@page
+@model WebApp.Pages.JobApplications.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobApplicationJobOffer[0].JobOffer.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobApplicationJobOffer[0].JobApplication.accepted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.JobApplicationJobOffer) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobOffer.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobApplication.accepted)
+            </td>
+            <td>
+                <a asp-page="/JobOffers/Details" asp-route-id="@item.JobApplication.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.JobApplication.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

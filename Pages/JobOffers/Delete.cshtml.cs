@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CoreApp.Data;
-using CoreApp.Models;
+using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Pages.JobOffers
 {
     public class DeleteModel : PageModel
     {
-        private readonly CoreApp.Data.JobOfferContext _context;
+        private readonly WebApp.Data.DataContext _context;
 
-        public DeleteModel(CoreApp.Data.JobOfferContext context)
+        public DeleteModel(WebApp.Data.DataContext context)
         {
             _context = context;
         }
