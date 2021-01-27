@@ -42,7 +42,7 @@ namespace WebApp.Pages.CV
         }
         public ActionResult OnGetDownloadAsync()
         {
-            return File(cvFile.Content, "application/octet-stream", "cv.pdf");
+            return File(cvFile.Content, "application/pdf");
         }
         public async Task<ActionResult> OnGetDeleteAsync()
         {

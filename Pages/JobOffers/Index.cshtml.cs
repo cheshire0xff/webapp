@@ -29,7 +29,7 @@ namespace WebApp.Pages.JobOffers
             var file = await _context.DatabaseFile.FindAsync(id);
             if (file != null)
             {
-                return File(file.Content, "application/pdf", "offer.pdf");
+                return File(file.Content, "application/pdf");
             }
             return RedirectToPage("./Index");
         }
