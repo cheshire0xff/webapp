@@ -22,8 +22,14 @@ namespace WebApp.Pages.JobOffers
             _context = context;
             _userManager = userManager;
         }
-        public IList<JobOffer> JobOffer { get;set; }
+        public IList<JobOffer> JobOffer { get; set; }
         public JobOffer JobOfferSingle { get; set; }
+        public string tagsSort { get; set; }
+        public string localizationSort { get; set; }
+        public string descriptionSort { get; set; }
+        public string addedDateSort { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
 
         public async Task<ActionResult> OnGetDownloadAsync(int id)
         {
@@ -36,11 +42,26 @@ namespace WebApp.Pages.JobOffers
         }
 
 
-        public async Task OnGetAsync(int jobId)
+        public async Task OnGetAsync(int jobId, string sortOrder, string searchString)
         {
             JobOffer = await _context.JobOffer.ToListAsync();
 
+            descriptionSort = 
+                string.IsNullOrEmpty(sortOrder) || sortOrder == "description_desc" ? "description_asc" : "description_desc";
+            localizationSort = sortOrder == "localization_asc" ? "localization_desc" : "localization_asc";
+            tagsSort = sortOrder == "tags_asc" ? "tags_desc" : "tags_asc";
+            addedDateSort = sortOrder == "expirationDate_asc" ? "expirationDate_desc" : "expirationDate_asc";
 
+            CurrentFilter = searchString;
+
+            IQueryable<JobOffer> jobsIQ = from s in JobOffer.AsQueryable()
+                                          select s;
+            IQueryable<JobOffer> jobsIQSingle = jobsIQ;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                jobsIQ = jobsIQ.Where(s => s.Description.Contains(searchString, StringComparison.CurrentCultureIgnoreCase));
+            }
 
             if (User.IsInRole("Employer"))
             {
@@ -55,12 +76,63 @@ namespace WebApp.Pages.JobOffers
             {
                 return;
             }
-            IQueryable<JobOffer> jobsIQ = from s in JobOffer.AsQueryable()
-                                          select s;
-            if (jobId == 0)
+
+            switch (sortOrder)
+            {
+                case "description_desc":
+                    jobsIQ = jobsIQ.OrderByDescending(s => s.Description);
+                    descriptionSort = "description_asc";
+                    break;
+                case "description_asc":
+                    jobsIQ = jobsIQ.OrderBy(s => s.Description);
+                    descriptionSort = "description_desc";
+                    break;
+                case "localization_desc":
+                    jobsIQ = jobsIQ.OrderByDescending(s => s.Localization);
+                    localizationSort = "localization_asc";
+                    break;
+                case "localization_asc":
+                    jobsIQ = jobsIQ.OrderBy(s => s.Localization);
+                    localizationSort = "localization_desc";
+                    break;
+                case "tags_desc":
+                    jobsIQ = jobsIQ.OrderByDescending(s => s.Tags);
+                    tagsSort = "tags_asc";
+                    break;
+                case "tags_asc":
+                    jobsIQ = jobsIQ.OrderBy(s => s.Tags);
+                    tagsSort = "tags_desc";
+                    break;
+                case "expirationDate_desc":
+                    jobsIQ = jobsIQ.OrderByDescending(s => s.AddedDate);
+                    addedDateSort = "expirationDate_asc";
+                    break;
+                case "expirationDate_asc":
+                    jobsIQ = jobsIQ.OrderBy(s => s.AddedDate);
+                    addedDateSort = "expirationDate_desc";
+                    break;
+                default:
+                    jobsIQ = jobsIQ.OrderBy(s => s.Description);
+                    break;
+            }
+
+            JobOffer = jobsIQ.AsNoTracking().ToList();
+            if (JobOffer.Count == 1)
+            {
+                jobsIQSingle = jobsIQ;
+                JobOfferSingle = jobsIQSingle.AsNoTracking().First();
+            }
+            else if (jobId == 0)
+            {
                 jobId = JobOffer[0].Id;
-            jobsIQ = jobsIQ.Where(s => s.Id == jobId);
-            JobOfferSingle = jobsIQ.AsNoTracking().First();
+                jobsIQSingle = jobsIQSingle.Where(s => s.Id == jobId);
+                JobOfferSingle = jobsIQSingle.AsNoTracking().First();
+            } 
+            else
+            {
+                jobsIQSingle = jobsIQSingle.Where(s => s.Id == jobId);
+                JobOfferSingle = jobsIQSingle.AsNoTracking().First();
+            }
         }
     }
 }

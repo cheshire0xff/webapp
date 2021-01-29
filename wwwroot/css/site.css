@@ -92,3 +92,7 @@ input textarea{
     width:1500px;
 }
 
+tbody tr:hover {
+    background-color: rgb(104, 241, 255);
+}
+

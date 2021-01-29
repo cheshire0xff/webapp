@@ -4,8 +4,20 @@
 // Write your Javascript code.
 window.onload = function () {
     stringShorten(80);
-    firstCapitalLetterFunc();
+    hilightCurrent();
+
+    
 };
+
+function hilightCurrent() {
+    const queryString = new URL(window.location);
+    const jobId = queryString.searchParams.get('jobId');
+
+    if (jobId === null)
+        document.getElementsByTagName("tr").item(1).style.backgroundColor = 'rgb(173, 244, 255)';
+    else
+        document.getElementById("trPreview+" + jobId).style.backgroundColor = 'rgb(173, 244, 255)';
+}
 
 function stringShorten(length) {
     var a = document.getElementsByClassName("shortString");
@@ -19,16 +31,16 @@ function stringShorten(length) {
     }
 }
 
-function firstCapitalLetterFunc() {
-    var a = document.getElementsByClassName("firstCapitalLetter");
-    for (var i = 0; i < a.length; i++) {
-        a[i].textContent =
-            a[i].textContent.trim().substring(0, 1).toUpperCase()
-            + a[i].textContent.trim().substring(1);
-    }
-}
+//function firstCapitalLetterFunc() {
+//    var a = document.getElementsByClassName("firstCapitalLetter");
+//    for (var i = 0; i < a.length; i++) {
+//        a[i].textContent =
+//            a[i].textContent.trim().substring(0, 1).toUpperCase()
+//            + a[i].textContent.trim().substring(1);
+//    }
+//}
 
-function openJobOfferId(jobId) {
+function openJobOfferId(jobId) {  
     document.getElementById("preview+" + jobId).click();
 }
 

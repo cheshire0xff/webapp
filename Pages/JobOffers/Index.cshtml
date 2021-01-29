@@ -7,6 +7,17 @@
 
 <h1>Current job offers</h1>
 
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 @if (User.IsInRole("Employer"))
 {
     <p>
@@ -18,23 +29,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].Description)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.descriptionSort">
+                    @Html.DisplayNameFor(model => model.JobOffer[0].Description)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].Localization)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.localizationSort">
+                    @Html.DisplayNameFor(model => model.JobOffer[0].Localization)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].Tags)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.tagsSort">
+                    @Html.DisplayNameFor(model => model.JobOffer[0].Tags)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].AddedDate)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.addedDateSort">
+                    @Html.DisplayNameFor(model => model.JobOffer[0].AddedDate)
+                </a>
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.JobOffer)
         {
-            <tr style="cursor: pointer;" onclick="openJobOfferId(@Html.DisplayFor(modelItem => item.Id))">
+            <tr id="trPreview+@item.Id" style="cursor: pointer;" onclick="openJobOfferId(@Html.DisplayFor(modelItem => item.Id))">
                 <td class="shortString">
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
@@ -47,7 +66,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.AddedDate)
                 </td>
-                <a id="preview+@item.Id" style="display: none" asp-page="/JobOffers/Index" asp-route-jobId="@item.Id"></a>
+                <a id="preview+@item.Id" class="trLink" style="display: none" asp-page="/JobOffers/Index" asp-route-jobId="@item.Id"></a>
             </tr>
         }
     </tbody>
@@ -67,10 +86,10 @@
         <a asp-page="/JobApplications/Create" asp-route-id="@Model.JobOfferSingle.Id">Apply</a>
     }
 
-    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].Description)</h2>
+    <h2 >@Html.DisplayNameFor(model => model.JobOfferSingle.Description)</h2>
     <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.Description)</p>
 
-    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].Localization)</h2>
+    <h2 >@Html.DisplayNameFor(model => model.JobOfferSingle.Localization)</h2>
     <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.Localization)</p>
 
 
