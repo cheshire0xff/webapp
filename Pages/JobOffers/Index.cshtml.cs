@@ -44,25 +44,6 @@ namespace WebApp.Pages.JobOffers
 
         public async Task OnGetAsync(int jobId, string sortOrder, string searchString)
         {
-            JobOffer = await _context.JobOffer.ToListAsync();
-
-            descriptionSort = 
-                string.IsNullOrEmpty(sortOrder) || sortOrder == "description_desc" ? "description_asc" : "description_desc";
-            localizationSort = sortOrder == "localization_asc" ? "localization_desc" : "localization_asc";
-            tagsSort = sortOrder == "tags_asc" ? "tags_desc" : "tags_asc";
-            addedDateSort = sortOrder == "expirationDate_asc" ? "expirationDate_desc" : "expirationDate_asc";
-
-            CurrentFilter = searchString;
-
-            IQueryable<JobOffer> jobsIQ = from s in JobOffer.AsQueryable()
-                                          select s;
-            IQueryable<JobOffer> jobsIQSingle = jobsIQ;
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                jobsIQ = jobsIQ.Where(s => s.Description.Contains(searchString, StringComparison.CurrentCultureIgnoreCase));
-            }
-
             if (User.IsInRole("Employer"))
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -75,6 +56,21 @@ namespace WebApp.Pages.JobOffers
             if (JobOffer.Count() == 0)
             {
                 return;
+            }
+            descriptionSort = 
+                string.IsNullOrEmpty(sortOrder) || sortOrder == "description_desc" ? "description_asc" : "description_desc";
+            localizationSort = sortOrder == "localization_asc" ? "localization_desc" : "localization_asc";
+            tagsSort = sortOrder == "tags_asc" ? "tags_desc" : "tags_asc";
+            addedDateSort = sortOrder == "expirationDate_asc" ? "expirationDate_desc" : "expirationDate_asc";
+            CurrentSort = sortOrder; 
+            CurrentFilter = searchString;
+
+            IQueryable<JobOffer> jobsIQ = from s in JobOffer.AsQueryable()
+                                          select s;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                jobsIQ = jobsIQ.Where(s => s.Description.Contains(searchString, StringComparison.CurrentCultureIgnoreCase));
             }
 
             switch (sortOrder)
@@ -117,21 +113,14 @@ namespace WebApp.Pages.JobOffers
             }
 
             JobOffer = jobsIQ.AsNoTracking().ToList();
-            if (JobOffer.Count == 1)
+            bool anyOfferFound = JobOffer.Count() > 0;
+            if (jobId == 0 && anyOfferFound)
             {
-                jobsIQSingle = jobsIQ;
-                JobOfferSingle = jobsIQSingle.AsNoTracking().First();
+                JobOfferSingle = JobOffer.First();
             }
-            else if (jobId == 0)
+            else if (anyOfferFound)
             {
-                jobId = JobOffer[0].Id;
-                jobsIQSingle = jobsIQSingle.Where(s => s.Id == jobId);
-                JobOfferSingle = jobsIQSingle.AsNoTracking().First();
-            } 
-            else
-            {
-                jobsIQSingle = jobsIQSingle.Where(s => s.Id == jobId);
-                JobOfferSingle = jobsIQSingle.AsNoTracking().First();
+                JobOfferSingle = JobOffer.Where(jo => jo.Id == jobId).First();
             }
         }
     }
