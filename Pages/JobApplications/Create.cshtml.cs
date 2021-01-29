@@ -35,12 +35,20 @@ namespace WebApp.Pages.JobApplications
             if (!User.IsInRole("Employer"))
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                var fId = _context.DatabaseFile.First(df => df.UserId == user.Id).Id;
-                JobApplication = new JobApplication{
-                    userId = user.Id,
-                    fileId = fId,
-                    jobOfferId = offerId
-                };
+                bool hasCv = _context.DatabaseFile.Where(df => df.UserId == user.Id).Count() != 0;
+                if (hasCv)
+                {
+                    var fId = _context.DatabaseFile.First(df => df.UserId == user.Id).Id;
+                    JobApplication = new JobApplication{
+                        UserId = user.Id,
+                        FileId = fId,
+                        JobOfferId = offerId
+                    };
+                }
+                else
+                {
+                    ModelState.AddModelError("Error", "Upload Your CV!");
+                }
             }
             return Page();
         }
@@ -58,8 +66,8 @@ namespace WebApp.Pages.JobApplications
             }
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var alreadyApplied = _context.JobApplication
-                .Where(ja => ja.userId == user.Id)
-                .Where(ja => ja.jobOfferId == JobApplication.jobOfferId)
+                .Where(ja => ja.UserId == user.Id)
+                .Where(ja => ja.JobOfferId == JobApplication.JobOfferId)
                 .Count() > 0;
 
             if (alreadyApplied)

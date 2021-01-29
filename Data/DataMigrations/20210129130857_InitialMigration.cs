@@ -49,7 +49,9 @@ namespace WebApp.Data.DataMigrations
                     fileId = table.Column<int>(nullable: false),
                     localization = table.Column<string>(nullable: false),
                     tags = table.Column<string>(nullable: true),
-                    expirationDate = table.Column<DateTime>(nullable: false)
+                    expirationDate = table.Column<DateTime>(nullable: false),
+                    addedDate = table.Column<DateTime>(nullable: false),
+                    employementType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

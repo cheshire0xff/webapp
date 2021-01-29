@@ -13,27 +13,27 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobApplication.jobOfferId)
+            @Html.DisplayNameFor(model => model.JobApplication.JobOfferId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobApplication.jobOfferId)
+            @Html.DisplayFor(model => model.JobApplication.JobOfferId)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobApplication.userId)
+            @Html.DisplayNameFor(model => model.JobApplication.UserId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobApplication.userId)
+            @Html.DisplayFor(model => model.JobApplication.UserId)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobApplication.fileId)
+            @Html.DisplayNameFor(model => model.JobApplication.FileId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobApplication.fileId)
+            @Html.DisplayFor(model => model.JobApplication.FileId)
         </dd>
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="JobApplication.id" />
+        <input type="hidden" asp-for="JobApplication.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

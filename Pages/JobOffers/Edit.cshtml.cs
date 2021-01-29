@@ -30,7 +30,7 @@ namespace WebApp.Pages.JobOffers
                 return NotFound();
             }
 
-            JobOffer = await _context.JobOffer.FirstOrDefaultAsync(m => m.id == id);
+            JobOffer = await _context.JobOffer.FirstOrDefaultAsync(m => m.Id == id);
 
             if (JobOffer == null)
             {
@@ -56,7 +56,7 @@ namespace WebApp.Pages.JobOffers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JobOfferExists(JobOffer.id))
+                if (!JobOfferExists(JobOffer.Id))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace WebApp.Pages.JobOffers
 
         private bool JobOfferExists(int id)
         {
-            return _context.JobOffer.Any(e => e.id == id);
+            return _context.JobOffer.Any(e => e.Id == id);
         }
     }
 }

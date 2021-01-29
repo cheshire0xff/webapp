@@ -9,7 +9,7 @@ using WebApp.Data;
 namespace WebApp.Data.DataMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210127210506_InitialMigration")]
+    [Migration("20210129130857_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,9 +71,15 @@ namespace WebApp.Data.DataMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("addedDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("employementType")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("employerId")
                         .IsRequired()

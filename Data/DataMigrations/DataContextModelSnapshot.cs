@@ -69,9 +69,15 @@ namespace WebApp.Data.DataMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("addedDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("employementType")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("employerId")
                         .IsRequired()

@@ -14,24 +14,32 @@
         <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="JobOffer.description" class="control-label"></label>
-                <textarea asp-for="JobOffer.description" class="form-control"> </textarea>
-                <span asp-validation-for="JobOffer.description" class="text-danger"></span>
+                <label asp-for="JobOffer.Description" class="control-label"></label>
+                <textarea asp-for="JobOffer.Description" class="form-control"> </textarea>
+                <span asp-validation-for="JobOffer.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="JobOffer.localization" class="control-label"></label>
-                <input asp-for="JobOffer.localization" class="form-control" />
-                <span asp-validation-for="JobOffer.localization" class="text-danger"></span>
+                <label asp-for="JobOffer.Localization" class="control-label"></label>
+                <input asp-for="JobOffer.Localization" class="form-control" />
+                <span asp-validation-for="JobOffer.Localization" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="JobOffer.tags" class="control-label"></label>
-                <input asp-for="JobOffer.tags" class="form-control" />
-                <span asp-validation-for="JobOffer.tags" class="text-danger"></span>
+                <label asp-for="JobOffer.Tags" class="control-label"></label>
+                <input asp-for="JobOffer.Tags" class="form-control" />
+                <span asp-validation-for="JobOffer.Tags" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="JobOffer.expirationDate" class="control-label"></label>
-                <input asp-for="JobOffer.expirationDate" class="form-control" />
-                <span asp-validation-for="JobOffer.expirationDate" class="text-danger"></span>
+                <label asp-for="JobOffer.ExpirationDate" class="control-label"></label>
+                <input asp-for="JobOffer.ExpirationDate" class="form-control" />
+                <span asp-validation-for="JobOffer.ExpirationDate" class="text-danger"></span>
+                @Html.ValidationMessage("Date", new{@class="text-danger"})
+            </div>
+            <div class="form-group">
+                <label asp-for="JobOffer.EmployementType" class="control-label"></label>
+                <select asp-for="JobOffer.EmployementType" asp-items="Html.GetEnumSelectList<WebApp.Models.EmployementType>()" class="form-control">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="JobOffer.EmployementType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

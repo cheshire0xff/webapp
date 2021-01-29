@@ -73,7 +73,7 @@ namespace WebApp.Pages.JobOffers
 
                         _context.DatabaseFile.Add(file);
                         await _context.SaveChangesAsync();
-                        JobOffer.fileId = file.Id;
+                        JobOffer.FileId = file.Id;
                     }
                 }
                 else
@@ -82,7 +82,13 @@ namespace WebApp.Pages.JobOffers
                     return Page();
                 }
             }
-            JobOffer.employerId = user.Id;
+            JobOffer.EmployerId = user.Id;
+            JobOffer.AddedDate = DateTime.Now;
+            if ((JobOffer.ExpirationDate - JobOffer.AddedDate).TotalDays < 0)
+            {
+                ModelState.AddModelError("Date", "Expiration date has to be at least one day from current time!");
+                return Page();
+            }
             ModelState.Clear();
             if (!TryValidateModel(JobOffer, nameof(JobOffer)))
             {

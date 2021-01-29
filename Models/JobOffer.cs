@@ -3,20 +3,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models
 {
+    public enum EmployementType
+    {
+        FullTime,
+        PartTime,
+        Apprentice,
+        Commision,
+    }
     public class JobOffer
     {
         [Key]
-        public int id { get; set;}
+        public int Id { get; set;}
         [Required]
-        public string employerId { get; set;}
+        public string EmployerId { get; set;}
         [Required]
-        public string description { get; set;}
+        public string Description { get; set;}
         [Required]
-        public int fileId{ get; set;}
+        public int FileId{ get; set;}
         [Required]
-        public string localization { get; set;}
-        public string tags { get; set;}
-        public DateTime expirationDate { get; set;}
+        public string Localization { get; set;}
+        public string Tags { get; set;}
+        [Required]
+        public DateTime ExpirationDate { get; set;}
+        [Required]
+        public DateTime AddedDate{ get; set;}
+
+        [Required]
+        public EmployementType EmployementType { get; set;}
     }
     
 }

@@ -28,7 +28,7 @@ namespace WebApp.Pages.JobApplications
                 return NotFound();
             }
 
-            JobApplication = await _context.JobApplication.FirstOrDefaultAsync(m => m.id == id);
+            JobApplication = await _context.JobApplication.FirstOrDefaultAsync(m => m.Id == id);
 
             if (JobApplication == null)
             {

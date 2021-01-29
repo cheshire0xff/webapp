@@ -3,24 +3,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models
 {
+    public enum Status
+    {
+        Pending,
+        Rejected,
+        Accepted
+    }
     public class JobApplication
     {
         [Key]
-        public int id { get; set;}
+        public int Id { get; set;}
         [Required]
-        public int jobOfferId { get; set;}
+        public int JobOfferId { get; set;}
         [Required]
-        public string userId { get; set;}
+        public string UserId { get; set;}
         [Required]
-        public int fileId { get; set;}
-        public enum Status
-        {
-            Pending,
-            Rejected,
-            Accepted
-        }
+        public int FileId { get; set;}
         [Required]
-        public Status status{ get; set;}
+        public Status Status{ get; set;}
     }
     
 }

@@ -29,7 +29,7 @@ namespace WebApp.Pages.JobOffers
                 return NotFound();
             }
 
-            JobOffer = await _context.JobOffer.FirstOrDefaultAsync(m => m.id == id);
+            JobOffer = await _context.JobOffer.FirstOrDefaultAsync(m => m.Id == id);
 
             if (JobOffer == null)
             {

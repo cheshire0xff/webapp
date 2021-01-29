@@ -23,7 +23,7 @@ namespace WebApp.Pages.JobOffers
             _userManager = userManager;
         }
         public IList<JobOffer> JobOffer { get;set; }
-        public IList<JobOffer> JobOfferSingle { get; set; }
+        public JobOffer JobOfferSingle { get; set; }
 
         public async Task<ActionResult> OnGetDownloadAsync(int id)
         {
@@ -40,25 +40,27 @@ namespace WebApp.Pages.JobOffers
         {
             JobOffer = await _context.JobOffer.ToListAsync();
 
-            IQueryable<JobOffer> jobsIQ = from s in JobOffer.AsQueryable()
-                                          select s;
-
-            if (jobId == 0)
-                jobId = JobOffer[0].id;
-            jobsIQ = jobsIQ.Where(s => s.id == jobId);
 
 
             if (User.IsInRole("Employer"))
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                JobOffer = await _context.JobOffer.Where(jo => jo.employerId == user.Id).ToListAsync();
+                JobOffer = await _context.JobOffer.Where(jo => jo.EmployerId == user.Id).ToListAsync();
             }
             else
             {
                 JobOffer = await _context.JobOffer.ToListAsync();
             }
-
-            JobOfferSingle = jobsIQ.AsNoTracking().ToList();
+            if (JobOffer.Count() == 0)
+            {
+                return;
+            }
+            IQueryable<JobOffer> jobsIQ = from s in JobOffer.AsQueryable()
+                                          select s;
+            if (jobId == 0)
+                jobId = JobOffer[0].Id;
+            jobsIQ = jobsIQ.Where(s => s.Id == jobId);
+            JobOfferSingle = jobsIQ.AsNoTracking().First();
         }
     }
 }

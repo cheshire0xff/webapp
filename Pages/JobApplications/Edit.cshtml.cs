@@ -28,7 +28,7 @@ namespace WebApp.Pages.JobApplications
                 return NotFound();
             }
 
-            JobApplication = await _context.JobApplication.FirstOrDefaultAsync(m => m.id == id);
+            JobApplication = await _context.JobApplication.FirstOrDefaultAsync(m => m.Id == id);
 
             if (JobApplication == null)
             {
@@ -54,7 +54,7 @@ namespace WebApp.Pages.JobApplications
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JobApplicationExists(JobApplication.id))
+                if (!JobApplicationExists(JobApplication.Id))
                 {
                     return NotFound();
                 }
@@ -69,7 +69,7 @@ namespace WebApp.Pages.JobApplications
 
         private bool JobApplicationExists(int id)
         {
-            return _context.JobApplication.Any(e => e.id == id);
+            return _context.JobApplication.Any(e => e.Id == id);
         }
     }
 }

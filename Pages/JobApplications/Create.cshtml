@@ -13,18 +13,21 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type=hidden asp-for="JobApplication.jobOfferId"/>
-            <input type=hidden asp-for="JobApplication.userId"/>
-            <input type=hidden asp-for="JobApplication.fileId"/>
+            <input type=hidden asp-for="JobApplication.JobOfferId"/>
+            <input type=hidden asp-for="JobApplication.UserId"/>
+            <input type=hidden asp-for="JobApplication.FileId"/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                @if (Model.JobApplication != null)
+                {
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                }
             </div>
             @Html.ValidationMessage("Error", new{@class="text-danger"})
         </form>
     </div>
 </div>
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="/JobOffers/Index">Back to List</a>
 </div>
 
 @section Scripts {

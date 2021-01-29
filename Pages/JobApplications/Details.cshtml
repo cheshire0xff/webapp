@@ -15,19 +15,19 @@
             CV
         </dt>
         <dd class="col-sm-10">
-            <a asp-page-handler="Download" asp-route-id="@Model.JobApplication.fileId">Download</a> |
+            <a asp-page-handler="Download" asp-route-id="@Model.JobApplication.FileId">Download</a> |
         </dd>
     </dl>
 </div>
 
 <div class="float-right" style="height: 800px">
-    <iframe src="/JobApplications/Details?id=@Model.JobApplication.fileId&handler=Download"
+    <iframe src="/JobApplications/Details?id=@Model.JobApplication.FileId&handler=Download"
             width="100%"
             height="100%"
             style="border: none;">
         <p>
             Your browser does not support PDFs.
-            <a href="/JobApplications/Details?id=@Model.JobApplication.fileId&handler=Download">Download the PDF</a>.
+            <a href="/JobApplications/Details?id=@Model.JobApplication.FileId&handler=Download">Download the PDF</a>.
         </p>
     </iframe>
 </div>
@@ -35,6 +35,6 @@
 <div class="float-clear"></div>
 
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.JobApplication.id">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.JobApplication.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

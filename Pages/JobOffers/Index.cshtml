@@ -18,92 +18,82 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].description)
+                @Html.DisplayNameFor(model => model.JobOffer[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].localization)
+                @Html.DisplayNameFor(model => model.JobOffer[0].Localization)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].tags)
+                @Html.DisplayNameFor(model => model.JobOffer[0].Tags)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JobOffer[0].expirationDate)
+                @Html.DisplayNameFor(model => model.JobOffer[0].AddedDate)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.JobOffer)
         {
-            <tr style="cursor: pointer;" onclick="openJobOfferId(@Html.DisplayFor(modelItem => item.id))">
+            <tr style="cursor: pointer;" onclick="openJobOfferId(@Html.DisplayFor(modelItem => item.Id))">
                 <td class="shortString">
-                    @Html.DisplayFor(modelItem => item.description)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.localization)
+                    @Html.DisplayFor(modelItem => item.Localization)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.tags)
+                    @Html.DisplayFor(modelItem => item.Tags)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.expirationDate)
+                    @Html.DisplayFor(modelItem => item.AddedDate)
                 </td>
-                <td>
-                    <a asp-page-handler="Download" asp-route-id="@item.fileId">Download</a>
-                    @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
-                    {
-
-                        <text> | </text><a asp-page="./Edit" asp-route-id="@item.id">Edit</a><text> |</text>
-                        <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
-                    }
-                    else if (User.Identity.IsAuthenticated)
-                    {
-                        <a asp-page="/JobApplications/Create" asp-route-id="@item.id">Apply</a>
-                    }
-                    <a id="preview+@item.id" style="display: none" asp-page="/JobOffers/Index" asp-route-jobId="@item.id"></a>
-                </td>
+                <a id="preview+@item.Id" style="display: none" asp-page="/JobOffers/Index" asp-route-jobId="@item.Id"></a>
             </tr>
         }
     </tbody>
 </table>
-
+@if (Model.JobOfferSingle != null)
+{
 <div class="float-right" style="width: 50%">
-    @foreach (var item in Model.JobOfferSingle)
+    <a asp-page-handler="Download" asp-route-id="@Model.JobOfferSingle.FileId">Download</a>
+    @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
     {
-        <a asp-page-handler="Download" asp-route-id="@item.fileId">Download</a>
-        @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
-        {
 
-            <text> | </text><a asp-page="./Edit" asp-route-id="@item.id">Edit</a><text> |</text>
-            <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
-        }
-        else if (User.Identity.IsAuthenticated)
-        {
-            <a asp-page="/JobApplications/Create" asp-route-id="@item.id">Apply</a>
-        }
-
-        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].description)</h2>
-        <p>@Html.DisplayFor(modelItem => item.description)</p>
-
-        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].localization)</h2>
-        <p>@Html.DisplayFor(modelItem => item.localization)</p>
-
-        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].tags)</h2>
-        <p>@Html.DisplayFor(modelItem => item.tags)</p>
-        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].expirationDate)</h2>
-        <p>@Html.DisplayFor(modelItem => item.expirationDate)</p>
-
-        <iframe src="/JobOffers/Index?id=@item.fileId&handler=Download"
-                width="100%"
-                height="800px"
-                style="border: none;">
-            <p>
-                Your browser does not support PDFs.
-                <a href="/JobOffers/Index?id=@item.fileId&handler=Download">Download the PDF</a>.
-            </p>
-        </iframe>
+        <text> | </text><a asp-page="./Edit" asp-route-id="@Model.JobOfferSingle.Id">Edit</a><text> |</text>
+        <a asp-page="./Delete" asp-route-id="@Model.JobOfferSingle.Id">Delete</a>
     }
+    else if (User.Identity.IsAuthenticated)
+    {
+        <a asp-page="/JobApplications/Create" asp-route-id="@Model.JobOfferSingle.Id">Apply</a>
+    }
+
+    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].Description)</h2>
+    <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.Description)</p>
+
+    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].Localization)</h2>
+    <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.Localization)</p>
+
+
+    <iframe src="/JobOffers/Index?id=@Model.JobOfferSingle.FileId&handler=Download"
+            width="100%"
+            height="800px"
+            style="border: none;">
+        <p>
+            Your browser does not support PDFs.
+            <a href="/JobOffers/Index?id=@Model.JobOfferSingle.FileId&handler=Download">Download the PDF</a>.
+        </p>
+    </iframe>
+
+    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].EmployementType)</h2>
+    <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.EmployementType)</p>
+    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].Tags)</h2>
+    <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.Tags)</p>
+    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].AddedDate)</h2>
+    <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.AddedDate)</p>
+    <h2 >@Html.DisplayNameFor(model => model.JobOffer[0].ExpirationDate)</h2>
+    <p>@Html.DisplayFor(modelItem => Model.JobOfferSingle.ExpirationDate)</p>
 </div>
+}
 
 
 <div class="float-clear"></div>

@@ -46,24 +46,24 @@ namespace WebApp.Pages.JobApplications
             }
             else if (!User.IsInRole("Employer"))
             {
-                JobApplication = await _context.JobApplication.Where(ja => ja.userId == user.Id).ToListAsync();
+                JobApplication = await _context.JobApplication.Where(ja => ja.UserId == user.Id).ToListAsync();
             }
             else
             {
-               List<JobOffer> jobOffers = await _context.JobOffer.Where(jo => jo.employerId == user.Id).ToListAsync();
+               List<JobOffer> jobOffers = await _context.JobOffer.Where(jo => jo.EmployerId == user.Id).ToListAsync();
                JobApplication = Enumerable.Join(
                    _context.JobApplication,
                    jobOffers,
-                   ja => ja.jobOfferId,
-                   eo => eo.id ,
+                   ja => ja.JobOfferId,
+                   eo => eo.Id ,
                    (ja, eo) => ja
                ).ToList();
             }
             JobApplicationJobOffer = Enumerable.Join(
                 JobApplication,
                 _context.JobOffer,
-                ja => ja.jobOfferId,
-                jo => jo.id,
+                ja => ja.JobOfferId,
+                jo => jo.Id,
                 (ja, jo) => new JobApplicationJobOffer(ja, jo)
             ).ToList();
         }

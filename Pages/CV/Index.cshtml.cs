@@ -23,26 +23,30 @@ namespace WebApp.Pages.CV
             _context = context;
             _userManager = userManager;
         }
-        public DatabaseFile cvFile { get; set;}
-        public async Task OnGetAsync()
+        public DatabaseFile CvFile { get; set;}
+        private async Task getFile()
         {
             if (!User.IsInRole("Employer"))
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 try 
                 {
-
-                cvFile = _context.DatabaseFile.First(f => f.UserId == user.Id);
+                    CvFile = _context.DatabaseFile.First(f => f.UserId == user.Id);
                 }
                 catch (InvalidOperationException)
                 {
-                    cvFile = null;
+                    CvFile = null;
                 }
             }
         }
-        public ActionResult OnGetDownloadAsync()
+        public async Task OnGetAsync()
         {
-            return File(cvFile.Content, "application/pdf");
+            await getFile();
+        }
+        public async Task<ActionResult> OnGetDownloadAsync()
+        {
+            await getFile();
+            return File(CvFile.Content, "application/pdf");
         }
         public async Task<ActionResult> OnGetDeleteAsync()
         {
@@ -51,14 +55,14 @@ namespace WebApp.Pages.CV
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 try 
                 {
-                    cvFile = _context.DatabaseFile.First(f => f.UserId == user.Id);
-                    _context.DatabaseFile.Remove(cvFile);
-                    cvFile = null;
+                    CvFile = _context.DatabaseFile.First(f => f.UserId == user.Id);
+                    _context.DatabaseFile.Remove(CvFile);
+                    CvFile = null;
                     await _context.SaveChangesAsync();
                 }
                 catch (InvalidOperationException)
                 {
-                    cvFile = null;
+                    CvFile = null;
                 }
             }
             return Page();
