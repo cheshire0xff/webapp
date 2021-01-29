@@ -70,7 +70,11 @@ namespace WebApp.Pages.JobOffers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                jobsIQ = jobsIQ.Where(s => s.Description.Contains(searchString, StringComparison.CurrentCultureIgnoreCase));
+                jobsIQ = jobsIQ.Where(s => 
+                    s.Description.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)
+                    || s.Localization.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)
+                    || s.Tags.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)
+                );
             }
 
             switch (sortOrder)

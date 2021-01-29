@@ -82,7 +82,6 @@
     <a asp-page-handler="Download" asp-route-id="@Model.JobOfferSingle.FileId">Download</a>
     @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
     {
-
         <text> | </text><a asp-page="./Edit" asp-route-id="@Model.JobOfferSingle.Id">Edit</a><text> |</text>
         <a asp-page="./Delete" asp-route-id="@Model.JobOfferSingle.Id">Delete</a>
     }
