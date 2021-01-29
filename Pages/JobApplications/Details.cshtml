@@ -6,16 +6,8 @@
 }
 
 <h1>Details</h1>
-<iframe
-src="/JobApplications/Details?id=@Model.JobApplication.fileId&handler=Download"
-width="100%"
-height="100%"
-style="border: none;">
-<p>Your browser does not support PDFs.
-    <a href="https://example.com/test.pdf">Download the PDF</a>.</p>
-</iframe>
 
-<div>
+<div class="float-left">
     <h4>JobApplication</h4>
     <hr />
     <dl class="row">
@@ -27,6 +19,21 @@ style="border: none;">
         </dd>
     </dl>
 </div>
+
+<div class="float-right" style="height: 800px">
+    <iframe src="/JobApplications/Details?id=@Model.JobApplication.fileId&handler=Download"
+            width="100%"
+            height="100%"
+            style="border: none;">
+        <p>
+            Your browser does not support PDFs.
+            <a href="/JobApplications/Details?id=@Model.JobApplication.fileId&handler=Download">Download the PDF</a>.
+        </p>
+    </iframe>
+</div>
+
+<div class="float-clear"></div>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.JobApplication.id">Edit</a> |
     <a asp-page="./Index">Back to List</a>

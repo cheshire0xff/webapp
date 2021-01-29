@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Current job offers</h1>
 
 @if (User.IsInRole("Employer"))
 {
@@ -13,7 +13,8 @@
         <a asp-page="Create">Create New</a>
     </p>
 }
-<table class="table">
+
+<table class="table float-left">
     <thead>
         <tr>
             <th>
@@ -32,33 +33,77 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.JobOffer) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.localization)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tags)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.expirationDate)
-            </td>
-            <td>
-                <a asp-page-handler="Download" asp-route-id="@item.fileId">Download</a> |
-                @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
-                {
-                    <a asp-page="./Edit" asp-route-id="@item.id">Edit</a><text> |</text>
-                    <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
-                }
-                else if(User.Identity.IsAuthenticated)
-                {
-                    <a asp-page="/JobApplications/Create" asp-route-id="@item.id">Apply</a>
-                }
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.JobOffer)
+        {
+            <tr style="cursor: pointer;" onclick="openJobOfferId(@Html.DisplayFor(modelItem => item.id))">
+                <td class="shortString">
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.localization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tags)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.expirationDate)
+                </td>
+                <td>
+                    <a asp-page-handler="Download" asp-route-id="@item.fileId">Download</a>
+                    @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
+                    {
+
+                        <text> | </text><a asp-page="./Edit" asp-route-id="@item.id">Edit</a><text> |</text>
+                        <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-page="/JobApplications/Create" asp-route-id="@item.id">Apply</a>
+                    }
+                    <a id="preview+@item.id" style="display: none" asp-page="/JobOffers/Index" asp-route-jobId="@item.id"></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="float-right" style="width: 50%">
+    @foreach (var item in Model.JobOfferSingle)
+    {
+        <a asp-page-handler="Download" asp-route-id="@item.fileId">Download</a>
+        @if (User.IsInRole("Employer") || User.IsInRole("Administrator"))
+        {
+
+            <text> | </text><a asp-page="./Edit" asp-route-id="@item.id">Edit</a><text> |</text>
+            <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+        }
+        else if (User.Identity.IsAuthenticated)
+        {
+            <a asp-page="/JobApplications/Create" asp-route-id="@item.id">Apply</a>
+        }
+
+        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].description)</h2>
+        <p>@Html.DisplayFor(modelItem => item.description)</p>
+
+        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].localization)</h2>
+        <p>@Html.DisplayFor(modelItem => item.localization)</p>
+
+        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].tags)</h2>
+        <p>@Html.DisplayFor(modelItem => item.tags)</p>
+        <h2 class="firstCapitalLetter">@Html.DisplayNameFor(model => model.JobOffer[0].expirationDate)</h2>
+        <p>@Html.DisplayFor(modelItem => item.expirationDate)</p>
+
+        <iframe src="/JobOffers/Index?id=@item.fileId&handler=Download"
+                width="100%"
+                height="800px"
+                style="border: none;">
+            <p>
+                Your browser does not support PDFs.
+                <a href="/JobOffers/Index?id=@item.fileId&handler=Download">Download the PDF</a>.
+            </p>
+        </iframe>
+    }
+</div>
+
+
+<div class="float-clear"></div>

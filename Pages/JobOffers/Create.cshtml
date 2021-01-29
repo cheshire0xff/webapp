@@ -10,12 +10,12 @@
 <h4>JobOffer</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="JobOffer.description" class="control-label"></label>
-                <input asp-for="JobOffer.description" class="form-control" />
+                <textarea asp-for="JobOffer.description" class="form-control"> </textarea>
                 <span asp-validation-for="JobOffer.description" class="text-danger"></span>
             </div>
             <div class="form-group">
