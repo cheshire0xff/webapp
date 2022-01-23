@@ -39,9 +39,15 @@ namespace WebApp.Pages.CV
                 }
             }
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null || User == null || User.IsInRole("Employer"))
+            {
+                return Forbid();
+            }
             await getFile();
+            return Page();
         }
         public async Task<ActionResult> OnGetDownloadAsync()
         {

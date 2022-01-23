@@ -35,8 +35,14 @@ namespace WebApp.Pages.JobOffers
             _userManager = userManager;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null || (!User.IsInRole("Employer") && !User.IsInRole("Administrator")))
+            {
+                return Forbid();
+            }
+
             return Page();
         }
         [BindProperty]
@@ -48,13 +54,23 @@ namespace WebApp.Pages.JobOffers
         // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
             if (!FileUpload.FormFile.FileName.EndsWith(".pdf"))
             {
                 ModelState.AddModelError("File", "Invalid file format.");
                 return Page();
             }
+
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (user == null || (!User.IsInRole("Employer") && !User.IsInRole("Administrator")))
+            {
+                return Forbid();
+            }
+
             using (var memoryStream = new MemoryStream())
             {
                 await FileUpload.FormFile.CopyToAsync(memoryStream);

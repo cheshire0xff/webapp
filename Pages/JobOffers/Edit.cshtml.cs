@@ -8,16 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace WebApp.Pages.JobOffers
 {
     public class EditModel : PageModel
     {
         private readonly WebApp.Data.DataContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public EditModel(WebApp.Data.DataContext context)
+        public EditModel(WebApp.Data.DataContext context,
+                UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -25,7 +30,8 @@ namespace WebApp.Pages.JobOffers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (id == null || user == null)
             {
                 return NotFound();
             }
@@ -36,6 +42,15 @@ namespace WebApp.Pages.JobOffers
             {
                 return NotFound();
             }
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+            if (user.Id != JobOffer.EmployerId && !User.IsInRole("Administrator"))
+            {
+                return NotFound();
+            }
             return Page();
         }
 
@@ -43,6 +58,21 @@ namespace WebApp.Pages.JobOffers
         // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+            if (user.Id != JobOffer.EmployerId && !User.IsInRole("Administrator"))
+            {
+                return NotFound();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
